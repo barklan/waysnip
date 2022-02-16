@@ -38,8 +38,6 @@ up:waysnip() {
 build:waysnip() {
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
     -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/waysnip/waysnip ./cmd/waysnip/.
-    CGO_ENABLED=0 GOOS=windows GOARCH=amd64 GOGC=off go build \
-    -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/waysnip/waysnip.exe ./cmd/waysnip/.
 }
 
 up:fullstack() {
