@@ -10,7 +10,7 @@ import (
 
 func reportErr(lg *zap.Logger, err error) error {
 	lg.Error("error will be copied to clipboard", zap.Error(err))
-	return wlclip.ToClip(fmt.Sprintf("ERROR: %s", err))
+	return wlclip.ToClip(fmt.Sprintf("WAYSNIP ERROR: %s", err))
 }
 
 func Run(lg *zap.Logger) error {
