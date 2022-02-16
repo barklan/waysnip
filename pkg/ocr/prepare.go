@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"image"
 	"image/png"
-	"os"
 
 	"github.com/anthonynsimon/bild/segment"
 	"golang.org/x/image/draw"
@@ -51,9 +50,9 @@ func PreProcess(bb []byte) ([]byte, error) {
 		return nil, fmt.Errorf("failed to encode png: %w", err)
 	}
 
-	output, _ := os.Create("tmp.png")
-	defer output.Close()
-	_ = png.Encode(output, img)
+	// output, _ := os.Create("tmp.png")
+	// defer output.Close()
+	// _ = png.Encode(output, img)
 
 	return buf.Bytes(), nil
 }
