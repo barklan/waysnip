@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/barklan/waysnip/pkg/ocr"
 	"github.com/barklan/waysnip/pkg/wlclip"
@@ -31,5 +32,10 @@ func Run(lg *zap.Logger) error {
 	}
 	lg.Info("ocr successful", zap.String("text", text))
 
-	return wlclip.ToClip(text)
+	pretty := strings.TrimSpace(text)
+	if pretty == "" {
+		pretty = "NO TEXT FOUND ON IMAGE"
+	}
+
+	return wlclip.ToClip(pretty)
 }
