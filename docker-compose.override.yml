@@ -1,9 +1,0 @@
-version: "3.8"
-
-services:
-  waysnip:
-    profiles: [ "main" ]
-
-networks:
-  traefik-public:
-    external: false

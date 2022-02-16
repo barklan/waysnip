@@ -15,11 +15,6 @@ fi
 # Helper functions start with _ and aren't listed in this script's help menu.
 # -----------------------------------------------------------------------------
 
-function _dc {
-    export DOCKER_BUILDKIT=1
-    docker-compose ${TTY} "${@}"
-}
-
 function _use_env {
     set -o allexport; . .env; set +o allexport
 }
@@ -38,11 +33,6 @@ up:waysnip() {
 build:waysnip() {
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
     -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/waysnip/waysnip ./cmd/waysnip/.
-}
-
-up:fullstack() {
-    docker-compose --profile main build --parallel
-    docker-compose --profile main up
 }
 
 env:prod() {
