@@ -1,11 +1,11 @@
 version: "3.8"
 
 services:
-  myapp:
-    image: '${DOCKER_IMAGE_PREFIX?Variable not set}myapp:rolling'
+  waysnip:
+    image: '${DOCKER_IMAGE_PREFIX?Variable not set}waysnip:rolling'
     build:
       context: .
-      dockerfile: dockerfiles/myapp.dockerfile
+      dockerfile: dockerfiles/waysnip.dockerfile
       args:
         DOCKER_IMAGE_PREFIX: ${DOCKER_IMAGE_PREFIX?Variable not set}
     networks:

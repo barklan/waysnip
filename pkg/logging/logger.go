@@ -3,7 +3,7 @@ package logging
 import (
 	"log"
 
-	"github.com/barklan/gotemplate/pkg/system"
+	"github.com/barklan/waysnip/pkg/system"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

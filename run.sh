@@ -30,16 +30,16 @@ up() {
     reflex -c reflex.conf --decoration=fancy
 }
 
-up:myapp() {
+up:waysnip() {
     _use_env
-    go run cmd/myapp/main.go
+    go run cmd/waysnip/main.go
 }
 
-build:myapp() {
+build:waysnip() {
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
-    -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/myapp/myapp ./cmd/myapp/.
+    -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/waysnip/waysnip ./cmd/waysnip/.
     CGO_ENABLED=0 GOOS=windows GOARCH=amd64 GOGC=off go build \
-    -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/myapp/myapp.exe ./cmd/myapp/.
+    -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/waysnip/waysnip.exe ./cmd/waysnip/.
 }
 
 up:fullstack() {

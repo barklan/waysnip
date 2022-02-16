@@ -24,7 +24,7 @@ RUN adduser \
     --no-create-home \
     --uid "${UID}" \
     "${USER}"
-WORKDIR $GOPATH/src/mypackage/myapp/
+WORKDIR $GOPATH/src/mypackage/waysnip/
 
 # use modules
 COPY go.mod .
@@ -38,7 +38,7 @@ COPY . .
 # Build the binary
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
     -ldflags='-w -s -extldflags "-static"' -a \
-    -o /go/bin/app ./cmd/myapp/.
+    -o /go/bin/app ./cmd/waysnip/.
 
 ############################
 # STEP 2 build a small image

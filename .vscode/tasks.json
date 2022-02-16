@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+    },
+    "tasks": [
+		{
+            "label": "r/up",
+            "type": "shell",
+            "command": "bash -i run.sh up",
+            "isBackground": true,
+        },
+		{
+            "label": "r/up:waysnip",
+            "type": "shell",
+            "command": "bash -i run.sh up:waysnip",
+            "isBackground": true,
+        },
+		{
+            "label": "r/build:waysnip",
+            "type": "shell",
+            "command": "bash -i run.sh build:waysnip",
+            "isBackground": true,
+        },
+		{
+            "label": "r/up:fullstack",
+            "type": "shell",
+            "command": "bash -i run.sh up:fullstack",
+            "isBackground": true,
+        },
+		{
+            "label": "r/env:prod",
+            "type": "shell",
+            "command": "bash -i run.sh env:prod",
+            "isBackground": true,
+        },
+    ],
+}
