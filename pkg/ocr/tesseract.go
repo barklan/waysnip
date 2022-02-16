@@ -20,7 +20,7 @@ func Process(bytes []byte) (string, error) {
 	}
 
 	// TODO "--psm 12" arguments should be under toggle (this is sparse text - good for code)
-	out, ok, err := system.ExecIn(5*time.Second, "tesseract", "--psm", "12", "-l", "eng", f.Name(), "-")
+	out, ok, err := system.ExecIn(5*time.Second, "tesseract", "-l", "eng", f.Name(), "-")
 	if !ok {
 		return "", fmt.Errorf("ocr timeout")
 	}

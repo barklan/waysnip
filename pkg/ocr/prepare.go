@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"os"
 
+	"github.com/anthonynsimon/bild/segment"
 	"golang.org/x/image/draw"
 )
 
@@ -25,22 +27,33 @@ func toBW(src image.Image) image.Image {
 	return grayImg
 }
 
+func threshold(img image.Image) image.Image {
+	return segment.Threshold(img, 128)
+}
+
 func PreProcess(bb []byte) ([]byte, error) {
 	src, err := png.Decode(bytes.NewBuffer(bb))
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode png: %w", err)
 	}
 
-	upscaled, err := oversample(src)
+	img, err := oversample(src)
 	if err != nil {
 		return nil, fmt.Errorf("failed to oversample: %w", err)
 	}
 
-	grey := toBW(upscaled)
+	img = toBW(img)
+
+	img = threshold(img)
 
 	buf := new(bytes.Buffer)
-	if err := png.Encode(buf, grey); err != nil {
+	if err := png.Encode(buf, img); err != nil {
 		return nil, fmt.Errorf("failed to encode png: %w", err)
 	}
+
+	output, _ := os.Create("tmp.png")
+	defer output.Close()
+	_ = png.Encode(output, img)
+
 	return buf.Bytes(), nil
 }
