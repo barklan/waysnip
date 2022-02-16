@@ -14,15 +14,22 @@ func reportErr(lg *zap.Logger, err error) error {
 }
 
 func Run(lg *zap.Logger) error {
-	bytes, err := wlclip.GetPNG()
-	lg.Info("got png", zap.Int("nbytes", len(bytes)))
+	bb, err := wlclip.GetPNG()
+	lg.Info("got png", zap.Int("nbytes", len(bb)))
 	if err != nil {
 		return reportErr(lg, err)
 	}
-	text, err := ocr.Process(bytes)
+
+	ready, err := ocr.PreProcess(bb)
+	if err != nil {
+		return reportErr(lg, err)
+	}
+
+	text, err := ocr.Process(ready)
 	if err != nil {
 		return reportErr(lg, err)
 	}
 	lg.Info("ocr successful", zap.String("text", text))
+
 	return wlclip.ToClip(text)
 }
