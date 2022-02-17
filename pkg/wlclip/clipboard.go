@@ -7,11 +7,12 @@ import (
 	"time"
 
 	"github.com/barklan/waysnip/pkg/system"
+	"go.uber.org/zap"
 )
 
 const pngMime = "image/png"
 
-func ToClip(str string) error {
+func ToClip(lg *zap.Logger, str string) error {
 	cmd := exec.Command("wl-copy", "-n")
 	in, err := cmd.StdinPipe()
 	if err != nil {
@@ -20,7 +21,9 @@ func ToClip(str string) error {
 	if _, err = in.Write([]byte(str)); err != nil {
 		return fmt.Errorf("failed to write to wl-copy: %w", err)
 	}
-	in.Close()
+	if err = in.Close(); err != nil {
+		lg.Warn("failed to close input pipe to wl-copy", zap.Error(err))
+	}
 	if err := cmd.Start(); err != nil {
 		return fmt.Errorf("failed to copy to clipboard: %w", err)
 	}

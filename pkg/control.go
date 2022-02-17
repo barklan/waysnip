@@ -11,7 +11,7 @@ import (
 
 func reportErr(lg *zap.Logger, err error) error {
 	lg.Error("error will be copied to clipboard", zap.Error(err))
-	return wlclip.ToClip(fmt.Sprintf("WAYSNIP ERROR: %s", err))
+	return wlclip.ToClip(lg, fmt.Sprintf("WAYSNIP ERROR: %s", err))
 }
 
 func Run(lg *zap.Logger) error {
@@ -37,5 +37,5 @@ func Run(lg *zap.Logger) error {
 		pretty = "NO TEXT FOUND ON IMAGE"
 	}
 
-	return wlclip.ToClip(pretty)
+	return wlclip.ToClip(lg, pretty)
 }
