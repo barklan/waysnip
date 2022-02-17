@@ -12,7 +12,15 @@ import (
 const pngMime = "image/png"
 
 func ToClip(str string) error {
-	cmd := exec.Command("wl-copy", "-n", str)
+	cmd := exec.Command("wl-copy", "-n")
+	in, err := cmd.StdinPipe()
+	if err != nil {
+		return fmt.Errorf("failed to attach stdin pipe to wl-copy: %w", err)
+	}
+	if _, err = in.Write([]byte(str)); err != nil {
+		return fmt.Errorf("failed to write to wl-copy: %w", err)
+	}
+	in.Close()
 	if err := cmd.Start(); err != nil {
 		return fmt.Errorf("failed to copy to clipboard: %w", err)
 	}
