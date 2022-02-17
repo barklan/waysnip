@@ -10,10 +10,14 @@ import (
 	"go.uber.org/zap"
 )
 
-const pngMime = "image/png"
+const (
+	pngMime = "image/png"
+	wlCopy  = "wl-copy"
+	wlPaste = "wl-paste"
+)
 
 func ToClip(lg *zap.Logger, str string) error {
-	cmd := exec.Command("wl-copy", "-n")
+	cmd := exec.Command(wlCopy, "-n")
 	in, err := cmd.StdinPipe()
 	if err != nil {
 		return fmt.Errorf("failed to attach stdin pipe to wl-copy: %w", err)
@@ -31,7 +35,7 @@ func ToClip(lg *zap.Logger, str string) error {
 }
 
 func isImg() (bool, error) {
-	out, ok, err := system.ExecIn(500*time.Millisecond, "wl-paste", "-l")
+	out, ok, err := system.ExecIn(500*time.Millisecond, wlPaste, "-l")
 	if !ok {
 		return false, fmt.Errorf("wl-paste timeout (possibly empty clipboard?)")
 	}
@@ -52,7 +56,7 @@ func GetPNG() ([]byte, error) {
 		return nil, fmt.Errorf("no image in clipboard")
 	}
 
-	out, ok, err := system.ExecIn(2*time.Second, "wl-paste", "--type", pngMime)
+	out, ok, err := system.ExecIn(2*time.Second, wlPaste, "--type", pngMime)
 	if !ok {
 		return nil, fmt.Errorf("timeout getting image from clipboard")
 	}
