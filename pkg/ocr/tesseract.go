@@ -19,7 +19,12 @@ func Process(bytes []byte) (string, error) {
 		return "", fmt.Errorf("failed to write image to temporary file: %w", err)
 	}
 
-	out, ok, err := system.ExecIn(5*time.Second, "tesseract", "-l", "eng", f.Name(), "-")
+	lang := "eng"
+	if len(os.Args) >= 2 {
+		lang = os.Args[1]
+	}
+
+	out, ok, err := system.ExecIn(5*time.Second, "tesseract", "-l", lang, f.Name(), "-")
 	if !ok {
 		return "", fmt.Errorf("ocr timeout")
 	}
