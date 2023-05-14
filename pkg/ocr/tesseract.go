@@ -24,7 +24,7 @@ func Process(bytes []byte) (string, error) {
 		lang = os.Args[1]
 	}
 
-	out, ok, err := system.ExecIn(5*time.Second, "tesseract", "-l", lang, f.Name(), "-")
+	out, ok, err := system.ExecIn(5*time.Second, "tesseract", "-l", lang, "--oem", "3", "-c", "preserve_interword_spaces=1", f.Name(), "-")
 	if !ok {
 		return "", fmt.Errorf("ocr timeout")
 	}
